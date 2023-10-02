@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, map, tap, delay } from 'rxjs';
 
-import { Country } from '../interfaces/country';
+import { Country } from '../interfaces/country.interface';
+import { CacheStore } from '../interfaces/cache-store.interface';
+import { Region } from '../interfaces/region.type';
 
 @Injectable({
     providedIn: 'root'
@@ -12,12 +14,32 @@ export class CountriesService {
 
     private apiUrl: string = 'https://restcountries.com/v3.1';
 
-    constructor(private http: HttpClient) { }
+    public cacheStore: CacheStore = {
+        byCapital: { term: '', countries: [] },
+        byCountry: { term: '', countries: [] },
+        byRegion:  { region: '', countries: [] }
+    }
 
+    constructor(private http: HttpClient) {
+        this.loadFromLocalStorage();
+    }
+    
+    // Persistencia local (cargar datos)
+    private loadFromLocalStorage() {
+        if (!localStorage.getItem('cacheStore')) return;    
+        this.cacheStore = JSON.parse(localStorage.getItem('cacheStore')!);
+    }
+
+    // Persistencia local (guardar datos)
+    private saveToLocalStorage() {
+        localStorage.setItem('cacheStore', JSON.stringify(this.cacheStore));
+    }
+
+    // Request comuna para obtener los países
     private getCountriesRequest(url: string): Observable<Country[]> {
         return this.http.get<Country[]>(url)
             .pipe(
-                catchError( () => of([]) ),
+                catchError( () => of([]) )
                 //delay(2000)
             );
     }
@@ -33,20 +55,32 @@ export class CountriesService {
     }    
 
     // Buscar por la capital
-    searchCapital(capital: string): Observable<Country[]> {
-        const url = `${this.apiUrl}/capital/${capital}`;
-        return this.getCountriesRequest(url);
+    searchCapital(term: string): Observable<Country[]> {
+        const url = `${this.apiUrl}/capital/${term}`;
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap( countries => this.cacheStore.byCapital = { term, countries } ),
+                tap( () => this.saveToLocalStorage() )
+            );
     }
 
     // Buscar por el país
-    searchCountry(name: string): Observable<Country[]> {
-        const url = `${this.apiUrl}/name/${name}`;
-        return this.getCountriesRequest(url);
+    searchCountry(term: string): Observable<Country[]> {
+        const url = `${this.apiUrl}/name/${term}`;
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap( countries => this.cacheStore.byCountry = { term, countries } ),
+                tap( () => this.saveToLocalStorage() )
+            );
     }
     
     // Buscar por la región
-    searchRegion(region: string): Observable<Country[]> {    
+    searchRegion(region: Region): Observable<Country[]> {    
         const url = `${this.apiUrl}/region/${region}`;
-        return this.getCountriesRequest(url);
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap( countries => this.cacheStore.byRegion = { region, countries } ),
+                tap( () => this.saveToLocalStorage() )
+            );
     }    
 }

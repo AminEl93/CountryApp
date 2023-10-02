@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Country } from '../../interfaces/country';
+import { Country } from '../../interfaces/country.interface';
 import { Region } from '../../interfaces/region.type';
 import { CountriesService } from '../../services/countries.service';
 
@@ -17,7 +17,8 @@ export class ByRegionPageComponent implements OnInit {
     constructor(private _countriesService: CountriesService) { }
     
     ngOnInit(): void {
-       
+        this.countries = this._countriesService.cacheStore.byRegion.countries;
+        this.selectedRegion = this._countriesService.cacheStore.byRegion.region;
     }
 
     searchByRegion(region: Region): void {
