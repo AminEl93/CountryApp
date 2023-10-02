@@ -12,7 +12,7 @@ Ejecutar el comando `npm start` y acceder a la URL `http://localhost:4200/`.
 
 ## Obtención de la información de la API
 
-Se ha de acceder a la página de [REST Countries](https://restcountries.com) y allí están todas las URLs disponibles para obtener todos los países mediantes diferentes formas.
+Se ha de acceder a la página de [REST Countries](https://restcountries.com) y allí están todas las URLs disponibles para obtener todos los países mediante diferentes formas.
 * Si se busca por su capital, la URL es `https://restcountries.com/v3.1/capital/{capital}`.
 * Si se busca directamente por el país, la URL es `https://restcountries.com/v3.1/name/{name}`.
 * Si se busca por su región, la URL es `https://restcountries.com/v3.1/region/{region}`.
