@@ -1,27 +1,18 @@
 # CountryApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+Esta aplicación consiste en un buscador de países con persistencia local. Los países se pueden buscar de 3 formas diferentes: **por capital**, **por país** o **por región**. El resultado nos mostrará una tabla con el código del país, su bandera, su nombre, su capital, su población y su información.
 
-## Development server
+Al clicar en la información, se mostrará una pantalla con todos los datos relacionados con el país seleccionado de forma dinámica: capital, región, código, idioma, moneda, traducciones de su nombre, etc.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+La aplicación se ha generado con la versión 16.0.0 de [Angular CLI](https://github.com/angular/angular-cli), con la versión 18.16.0 de NodeJS y con la versión 9.6.6 de npm.
 
-## Code scaffolding
+## Iniciar la aplicación
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ejecutar el comando `npm start` y acceder a la URL `http://localhost:4200/`.
 
-## Build
+## Obtención de la información de la API
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Se ha de acceder a la página de [REST Countries](https://restcountries.com) y allí están todas las URLs disponibles para obtener todos los países mediantes diferentes formas.
+* Si se busca por su capital, la URL es `https://restcountries.com/v3.1/capital/{capital}`.
+* Si se busca directamente por el país, la URL es `https://restcountries.com/v3.1/name/{name}`.
+* Si se busca por su región, la URL es `https://restcountries.com/v3.1/region/{region}`.
