@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../../interfaces/country.interface';
 import { CountriesService } from '../../services/countries.service';
@@ -16,7 +17,8 @@ export class CountryPageComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private _countriesService: CountriesService
+        private _countriesService: CountriesService,
+        private location: Location
     ) { }
   
     ngOnInit(): void {  
@@ -28,5 +30,9 @@ export class CountryPageComponent implements OnInit {
                 if (!country) { return this.router.navigateByUrl('') };
                 return this.country = country;
             });
-    } 
+    }
+
+    goBack(): void {
+        this.location.back();
+    }
 }
