@@ -16,3 +16,5 @@ Se ha de acceder a la página de [REST Countries](https://restcountries.com) y a
 * Si se busca por su capital, la URL es `https://restcountries.com/v3.1/capital/{capital}`.
 * Si se busca directamente por el país, la URL es `https://restcountries.com/v3.1/name/{name}`.
 * Si se busca por su región, la URL es `https://restcountries.com/v3.1/region/{region}`.
+
+Para probar la aplicación, se puede acceder a este [enlace](https://country-app-amin.netlify.app).
